@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <script id="user-info-template" type="text/x-handlebars-template">
+        {{#if apartments}}
+          {{#each apartments}}
+            <div class="result">
+              <img src="{{img}}" />
+              <label class="label l-addr">adrress</label><p
+                class="adrress"
+              >{{address}}</p>
+              <label class="label l-price">price</label><p
+                class="price"
+              >{{price}}</p>
+              <label class="label l-rooms">roomes</label><p
+                class="rooms"
+              >{{rooms}}</p>
+              {{#if parking}}
+                <label class="label l-park">parking</label><i
+                  class="fa-solid fa-square-parking"
+                ></i>
+                <label class="label">Features</label>
+                {{#each features}}
+                  <li>{{this}}</li>
+                {{/each}}
+              {{/if}}
+              {{#if immediate}}
+                <p>Contact details</p>
+                <p>name: {{contactDetails.name}}</p>
+                <p>email: {{contactDetails.email}}</p>
+              {{/if}}
+            </div>
+          {{/each}}
+        {{else}}
+          <div id="no-houses"><h2>on houses where found!</h2></div>
+        {{/if}}
+      </script>
+</body>
+</html>
