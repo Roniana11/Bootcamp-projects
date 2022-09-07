@@ -10,9 +10,12 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",
-    "handlebars": "^4.7.7"
+    "handlebars": "^4.7.7",
+    "jquery": "^3.6.1"
   },
   "devDependencies": {
+    "@types/handlebars": "^4.1.0",
+    "@types/handlebars-helpers": "^0.5.3",
     "@types/jquery": "^3.5.14"
   }
 }

@@ -1,47 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <script id="user-info-template" type="text/x-handlebars-template">
-        {{#if apartments}}
-          {{#each apartments}}
-            <div class="result">
-              <img src="{{img}}" />
-              <label class="label l-addr">adrress</label><p
-                class="adrress"
-              >{{address}}</p>
-              <label class="label l-price">price</label><p
-                class="price"
-              >{{price}}</p>
-              <label class="label l-rooms">roomes</label><p
-                class="rooms"
-              >{{rooms}}</p>
-              {{#if parking}}
-                <label class="label l-park">parking</label><i
-                  class="fa-solid fa-square-parking"
-                ></i>
-                <label class="label">Features</label>
-                {{#each features}}
-                  <li>{{this}}</li>
-                {{/each}}
-              {{/if}}
-              {{#if immediate}}
-                <p>Contact details</p>
-                <p>name: {{contactDetails.name}}</p>
-                <p>email: {{contactDetails.email}}</p>
-              {{/if}}
-            </div>
+      {{#if useData}}
+        <header class="header">
+          <img src="{{img}}" class="avatar" />
+          <div>
+            <h5>{{firstName}}</h5>
+            <h6>{{lastName}}</h6>
+          </div>
+        </header>
+        <div class="quote-container">
+          <label for="">Favorite qoute:</label>
+          <p id="quote">{{qoute}}</p>
+        </div>
+        <div class="pokemon-container">
+          <img src="{{pokemonImg}}" class="avatar" />
+          <label for="pokemon">Favorite pokemon:</label>
+          <p id="pokemon">{{pokemonName}}</p>
+        </div>
+        <div class="about-container">
+          <label for="about">About me</label>
+          <p id="about">{{about}}</p>
+        </div>
+      {{/if}}
+    </script>
+    <script id="control-bar-template" type="text/x-handlebars-template">
+      <div class="control-bar-container">
+        <button id="generateBtn">Generate user</button>
+      </div>
+    </script>
+    <script id="friends-template" type="text/x-handlebars-template">
+      {{#if friends}}
+        <div id="friends-container">
+          {{#each friends}}
+            <h5>{{first name}} {{last name}}</h5>
           {{/each}}
-        {{else}}
-          <div id="no-houses"><h2>on houses where found!</h2></div>
-        {{/if}}
-      </script>
-</body>
+        </div>
+      {{/if}}
+    </script>
+    <script src="bacon-api.js"></script>
+    <script src="kanye-api.js"></script>
+    <script src="pokemon-api.js"></script>
+    <script src="user-api.js"></script>
+    <script src="user-profile.js"></script>
+    <script src="render.js"></script>
+    <script src="main.js"></script>
+  </body>
 </html>
