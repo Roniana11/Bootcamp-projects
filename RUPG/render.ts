@@ -1,11 +1,38 @@
-import handleBars from "handlebars";
-import jQuery from "jquery";
-export class Renderer {
-  renderProfile(userData: object) {
-    jQuery("body").empty();
 
-    let source = jQuery("#user-info-template").html();
-    let template = handleBars.compile(source);
-    let newProfile = template({ userDetails: userData });
+ class Renderer {
+
+  reRender(userData: any) {
+    const container = $('#container')
+   container.empty();
+    let newProfile = this.createTemplateEl('user-info-template',userData);
+    let newFriendsEl = this.createTemplateEl('friends-template',{friends: [...userData.friends]});
+    let newPokemonEl =this.createTemplateEl('pokemon-template',userData.pokemon);
+    let newQouteEl =this.createTemplateEl('qoute-template',{qoute: userData.qoute});
+    container.css('display', 'grid');
+   container.append(newProfile,newFriendsEl,newPokemonEl,newQouteEl);
+  }
+
+  renderSavedUserList(users:any){
+    $('.dropdown-content').empty();
+    let newMenu = this.createTemplateEl('dropdown-template',{users: [...users]});
+    $('.dropdown-content').append(newMenu);
+  }
+
+  renderErrorMessage() {
+    const container = $('#container')
+    container.empty();
+    container.css('display', 'block');
+    container.append('<div class="card">Oops! something happend...</div>');
+  
+}
+
+  createTemplateEl(id:string,data:any){
+    let source = $(`#${id}`).html();
+    let template = Handlebars.compile(source);
+    let newEl = template(data);
+    return newEl;
   }
 }
+
+
+

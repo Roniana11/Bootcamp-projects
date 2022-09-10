@@ -8,12 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserProfile = void 0;
-const user_api_1 = require("./services/user-api");
-const bacon_api_1 = require("./services/bacon-api");
-const kanye_api_1 = require("./services/kanye-api");
-const pokemon_api_1 = require("./services/pokemon-api");
 class UserProfile {
     constructor() {
         this.userData = {
@@ -27,44 +21,90 @@ class UserProfile {
             about: "",
             qoute: "",
         };
+        this.savedUsers = this.loadUsersFromStorage();
+    }
+    getUserData() {
+        return this.userData;
+    }
+    getSavedUsers() {
+        return this.savedUsers;
     }
     generateUserData() {
         return __awaiter(this, void 0, void 0, function* () {
-            const responses = yield Promise.all([
-                (0, user_api_1.fetchUserData)(1),
-                (0, user_api_1.fetchUserData)(7),
-                (0, bacon_api_1.fetchBaconText)(),
-                (0, kanye_api_1.fetchKanyeTweet)(),
-                (0, pokemon_api_1.fetchRandomPokemon)(),
-            ]);
-            this.setPersonalDetails(responses[0]);
-            this.setFriends(responses[1]);
-            this.setAbout(responses[2]);
-            this.setTweet(responses[3]);
-            this.setPokemon(responses[4]);
-            return this.userData;
+            try {
+                const responses = yield Promise.all([
+                    fetchUserData(1),
+                    fetchUserData(6),
+                    fetchBaconText(),
+                    fetchKanyeTweet(),
+                    fetchRandomPokemon(),
+                ]);
+                this.setPersonalDetails(responses[0]);
+                this.setFriends(responses[1]);
+                this.setAbout(responses[2]);
+                this.setTweet(responses[3]);
+                this.setPokemon(responses[4]);
+                return this.userData;
+            }
+            catch (err) {
+                throw new Error();
+            }
         });
     }
     setTweet(tweet) {
         this.userData.qoute = tweet;
     }
     setAbout(about) {
-        this.userData.about = about.data[0];
+        this.userData.about = about[0];
     }
     setPokemon(pokemon) {
-        this.userData.pokemon = { name: pokemon.name, image: pokemon.sprites.front_default };
+        this.userData.pokemon = {
+            name: pokemon.name,
+            image: pokemon.sprites.front_default,
+        };
     }
     setFriends(people) {
-        people.forEach((person) => {
-            this.userData.friends.push(`${person.name.first} ${person.name.last}`);
+        this.userData.friends = people.map((person) => {
+            return {
+                name: { first: person.name.first, last: person.name.last },
+                picture: person.picture.medium,
+            };
         });
     }
     setPersonalDetails(people) {
         this.userData.firstName = people[0].name.first;
         this.userData.lastName = people[0].name.last;
-        this.userData.picture = people[0].picture.thumbnail;
+        this.userData.picture = people[0].picture.large;
         this.userData.city = people[0].location.city;
         this.userData.state = people[0].location.state;
     }
+    loadUsersFromStorage() {
+        let savedUsersSting = localStorage.getItem("users");
+        return savedUsersSting ? JSON.parse(savedUsersSting) : [];
+    }
+    saveUser() {
+        const isExists = this.savedUsers.find((user) => user.picture === this.userData.picture);
+        if (!isExists)
+            this.savedUsers.push(this.userData);
+        localStorage.setItem("users", JSON.stringify(this.savedUsers));
+    }
+    loadUser(id) {
+        const userToLoad = this.savedUsers.find((user) => user.picture === id);
+        if (userToLoad) {
+            this.userData = userToLoad;
+        }
+    }
+    clearData() {
+        this.userData = {
+            firstName: "",
+            lastName: "",
+            picture: "",
+            city: "",
+            state: "",
+            friends: [],
+            pokemon: { name: "", image: "" },
+            about: "",
+            qoute: "",
+        };
+    }
 }
-exports.UserProfile = UserProfile;

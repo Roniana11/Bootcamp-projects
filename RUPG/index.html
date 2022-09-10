@@ -5,54 +5,78 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway"
+      rel="stylesheet"
+    />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   </head>
   <body>
+    <header>
+    <div class="control-bar-container" >
+      <button id="generateBtn" class="button">GENERATE</button>
+      <button id="saveBtn" class="button">SAVE</button>
+      <div id="dropdown">
+        <button id="loadBtn" class="button">LOAD</button>
+        <div class="dropdown-content"></div>
+      </div>
+    </div>
+  </header>
+    <div id="container"></div>
     <script id="user-info-template" type="text/x-handlebars-template">
-      {{#if useData}}
-        <header class="header">
-          <img src="{{img}}" class="avatar" />
-          <div>
-            <h5>{{firstName}}</h5>
-            <h6>{{lastName}}</h6>
-          </div>
-        </header>
-        <div class="quote-container">
-          <label for="">Favorite qoute:</label>
-          <p id="quote">{{qoute}}</p>
+      <div id="user-profile-container" class="flex-column card">
+        <div class="avatar-container flex-column">
+          <img src="{{picture}}" class="avatar" />
+          <h3>{{firstName}} {{lastName}}</h3>
         </div>
-        <div class="pokemon-container">
-          <img src="{{pokemonImg}}" class="avatar" />
-          <label for="pokemon">Favorite pokemon:</label>
-          <p id="pokemon">{{pokemonName}}</p>
+        <div id="location-container" class="flex-column">
+          <p><i class="fa-thin fa-location-dot"></i> {{city}}, {{state}}</p>
         </div>
+
         <div class="about-container">
-          <label for="about">About me</label>
           <p id="about">{{about}}</p>
         </div>
-      {{/if}}
-    </script>
-    <script id="control-bar-template" type="text/x-handlebars-template">
-      <div class="control-bar-container">
-        <button id="generateBtn">Generate user</button>
       </div>
     </script>
     <script id="friends-template" type="text/x-handlebars-template">
-      {{#if friends}}
-        <div id="friends-container">
-          {{#each friends}}
-            <h5>{{first name}} {{last name}}</h5>
-          {{/each}}
-        </div>
-      {{/if}}
+      <div id="friends-container" class="card">
+        {{#each friends}}
+          <div class="flex-column">
+            <img src="{{picture}}" class="avatar-round" />
+            <h5>{{name.first}} {{name.last}}</h5>
+          </div>
+        {{/each}}
+      </div>
     </script>
-    <script src="bacon-api.js"></script>
-    <script src="kanye-api.js"></script>
-    <script src="pokemon-api.js"></script>
-    <script src="user-api.js"></script>
-    <script src="user-profile.js"></script>
-    <script src="render.js"></script>
-    <script src="main.js"></script>
+    <script id="pokemon-template" type="text/x-handlebars-template">
+      <div class="card pokemon-container flex-column">
+        <label>MY FAVORITE POKEMON IS <b>{{name}}</b></label>
+        <img src="{{image}}" />
+      </div>
+    </script>
+    <script id="qoute-template" type="text/x-handlebars-template">
+      <div id="quote-container" class="card">
+        <p id="quote">" {{qoute}} " (kanye)</p>
+      </div>
+    </script>
+    <script id="dropdown-template" type="text/x-handlebars-template">
+      <div>
+          {{#each users}}
+            <div class="menuItem" data-id={{picture}}>
+              <p>{{firstName}} {{lastName}}</p>
+            </div>
+          {{/each}}
+      </div>;
+    </script>
+    <script src="./services/bacon-api.js"></script>
+    <script src="./services/kanye-api.js"></script>
+    <script src="./services/pokemon-api.js"></script>
+    <script src="./services/user-api.js"></script>
+    <script src="./user-profile.js"></script>
+    <script src="./render.js"></script>
+    <script src="./main.js"></script>
   </body>
 </html>

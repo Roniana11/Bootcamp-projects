@@ -1,0 +1,143 @@
+* {
+  box-sizing: border-box;
+  font-family: "Raleway", sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #fef8fb;
+}
+
+header {
+  width: 100%;
+  background-color: #fef8fb;
+  padding: 20px;
+  box-shadow: 3px 3px 3px rgba(128, 128, 128, 0.534);
+}
+
+#container {
+  margin: 50px;
+  height: auto;
+  align-items: center;
+  padding: 30px;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 220px 220px 190px 100px;
+  grid-template-areas: "u u u f" "u u u f" "u u u p" "q q q q";
+  background-color: #e289b0;
+  border-radius: 7px;
+}
+.card {
+  background-color: #fcf1f6;
+  border-radius: 7px;
+  box-shadow: 3px 3px 3px rgba(128, 128, 128, 0.534);
+  padding: 20px;
+  height: 100%;
+  /* margin: 10px 5px; */
+}
+
+#user-profile-container {
+  grid-area: u;
+  padding: 50px;
+  justify-content: center;
+}
+.control-bar-container {
+  display: flex;
+  width: 100%;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button {
+  background-color: #6495ed;
+  border-style: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.avatar-container {
+  align-items: center;
+}
+.button:hover {
+  background-color: #4f84e7;
+}
+
+.avatar {
+  border-radius: 20%;
+}
+
+.avatar-round {
+  border-radius: 50%;
+}
+
+.about-container {
+  font-size: 13px;
+  text-align: center;
+  line-height: 20px;
+}
+
+#quote-container {
+  grid-area: q;
+  font-weight: bold;
+  font-style: italic;
+}
+
+#location-container {
+  font-size: 13px;
+}
+
+#location-container p {
+  margin: 0;
+}
+#friends-container {
+  grid-area: f;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  justify-content: space-evenly;
+}
+
+.pokemon-container img {
+  width: 100px;
+}
+
+.pokemon-container {
+  grid-area: p;
+}
+
+#dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  border-bottom: transparent;
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  z-index: 1;
+}
+
+#dropdown:hover .dropdown-content {
+  display: block;
+}
+.menuItem {
+  padding: 16px 10px;
+}
+
+.menuItem p {
+  margin: 0;
+}
+
+.menuItem:hover {
+  background-color: #4f84e759;
+}

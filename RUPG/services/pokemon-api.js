@@ -8,17 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateRandomId = exports.fetchRandomPokemon = void 0;
-const axios_1 = __importDefault(require("axios"));
 function fetchRandomPokemon() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const url = (yield generateRandomId()) || `https://pokeapi.co/api/v2/pokemon/1`;
-            const { data } = yield axios_1.default.get(url);
+            const data = yield $.get(url);
             return data;
         }
         catch (err) {
@@ -26,11 +20,10 @@ function fetchRandomPokemon() {
         }
     });
 }
-exports.fetchRandomPokemon = fetchRandomPokemon;
 function generateRandomId() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { data } = yield axios_1.default.get(`https://pokeapi.co/api/v2/pokemon/?limit=1500`);
+            const data = yield $.get(`https://pokeapi.co/api/v2/pokemon/?limit=1500`);
             const numberOfPokemons = data.results.length;
             const randomPokemon = (Math.random() * numberOfPokemons).toFixed(0);
             return data.results[randomPokemon].url;
@@ -40,4 +33,3 @@ function generateRandomId() {
         }
     });
 }
-exports.generateRandomId = generateRandomId;

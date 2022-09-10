@@ -1,9 +1,7 @@
-import axios from 'axios';
 
-
-export async function fetchKanyeTweet(){
+ async function fetchKanyeTweet(){
     try{
-        const {data} = await axios.get('https://api.kanye.rest/');
+        const data = await $.get('https://api.kanye.rest/');
         return data.quote;
     }catch(err){
         console.log(err)

@@ -8,16 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchKanyeTweet = void 0;
-const axios_1 = __importDefault(require("axios"));
 function fetchKanyeTweet() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { data } = yield axios_1.default.get('https://api.kanye.rest/');
+            const data = yield $.get('https://api.kanye.rest/');
             return data.quote;
         }
         catch (err) {
@@ -25,4 +19,3 @@ function fetchKanyeTweet() {
         }
     });
 }
-exports.fetchKanyeTweet = fetchKanyeTweet;

@@ -1,11 +1,31 @@
-import { Renderer } from "./render";
-import { UserProfile } from "./user-profile";
-
 const userProfile = new UserProfile();
 const render = new Renderer();
 
+async function renderUser() {
+  try {
+    render.reRender(userProfile.getUserData());
+    const userData = await userProfile.generateUserData();
+    render.reRender(userData);
+  } catch (err) {
+    render.renderErrorMessage();
+  }
+}
 
-render.renderProfile(userProfile.getUserProfileData());
-$('#generateBtn').on('click',() => render.renderProfile(userProfile.generateUserData));
+$("#generateBtn").on("click", async function () {
+    userProfile.clearData();
+  await renderUser();
+});
 
-userProfile.generateUserData()
+$("#saveBtn").on("click", () => {
+  userProfile.saveUser();
+  render.renderSavedUserList(userProfile.getSavedUsers());
+});
+
+$("#dropdown").on("click", ".menuItem", function () {
+  const id = $(this).data().id;
+  userProfile.loadUser(id);
+  render.reRender(userProfile.getUserData());
+});
+
+render.renderSavedUserList(userProfile.getSavedUsers());
+renderUser();
