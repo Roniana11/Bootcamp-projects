@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+      integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  </head>
+  <body>
+    <div class="serach-container">
+      <input type="text" id="teamInput" placeholder="Team name" />
+      <input type="text" id="yearInput" placeholder="year" />
+      <button id="getBtn">Get Players</button>
+    </div>
+    <div class="players-container"></div>
+    <script id="players-template" type="text/x-handlebars-template">
+      <div class="player-container card">
+        {{#each players}}
+          <div>{{firstName}} {{lastName}}</div>
+          <div>{{jersey}}</div>
+          <img src="https://nba-players.herokuapp.com/players/{{lastName}}/{{firstName}}" alt="{{firstName}} {{lastName}}" />
+          <div>{{pos}}</div>
+        {{/each}}</div>
+    </script>
+    <script src=".view/playersRenderer.js"></script>
+    <script src="./main.js"></script>
+  </body>
+</html>
