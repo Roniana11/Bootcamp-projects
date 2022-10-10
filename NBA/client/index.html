@@ -23,20 +23,31 @@
   <body>
     <div class="serach-container">
       <input type="text" id="teamInput" placeholder="Team name" />
-      <input type="text" id="yearInput" placeholder="year" />
+      <input
+        type="number"
+        id="yearInput"
+        placeholder="year"
+        min="2012"
+        max="2022"
+      />
       <button id="getBtn">Get Players</button>
     </div>
     <div class="players-container"></div>
     <script id="players-template" type="text/x-handlebars-template">
-      <div class="player-container card">
-        {{#each players}}
-          <div>{{firstName}} {{lastName}}</div>
+      {{#each players}}
+        <div class="player-container" id="{{id}}">
+          <h3>{{name}}</h3>
           <div>{{jersey}}</div>
-          <img src="https://nba-players.herokuapp.com/players/{{lastName}}/{{firstName}}" alt="{{firstName}} {{lastName}}" />
-          <div>{{pos}}</div>
-        {{/each}}</div>
+          <img src="{{image}}" alt="{{name}}" />
+          <h5>{{position}}</h5>
+        </div>
+      {{/each}}
     </script>
-    <script src=".view/playersRenderer.js"></script>
+    <script src="./services/playersApi.js"></script>
+    <script src="./models/Player.js"></script>
+    <script src="./models/playersModel.js"></script>
+    <script src="./models/dreamTeamModel.js"></script>
+    <script src="./view/playersRenderer.js"></script>
     <script src="./main.js"></script>
   </body>
 </html>
