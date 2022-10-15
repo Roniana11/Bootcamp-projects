@@ -28,7 +28,6 @@ class Players {
             const data = yield fetchPlayers(teamName, year, filter);
             this.cleanPlayers();
             this.players = data.map((player) => {
-                //find a solution for any here
                 return {
                     id: player.personId,
                     name: player.firstName.toUpperCase() + " " + player.lastName.toUpperCase(),

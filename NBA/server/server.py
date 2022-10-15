@@ -24,7 +24,7 @@ async def get_team(year: int, team: str,filter: Union[str, None] = None):
     try:
         players = await get_players(year,team)
         if filter:
-            players = [player for player in players if player[filter]] #fix errors in case of wrong filter
+            players = [player for player in players if player[filter]] 
         return players
     except KeyError as e:
         raise HTTPException(status_code=400, detail= e.args[0])

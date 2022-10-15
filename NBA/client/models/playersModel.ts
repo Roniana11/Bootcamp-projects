@@ -20,7 +20,7 @@ class Players {
     const data = await fetchPlayers(teamName, year,filter);
     this.cleanPlayers()
     this.players = data.map((player: any) => {
-      //find a solution for any here
+
       return {
         id: player.personId,
         name: player.firstName.toUpperCase() + " " + player.lastName.toUpperCase(),

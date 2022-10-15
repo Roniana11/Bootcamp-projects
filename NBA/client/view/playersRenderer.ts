@@ -1,6 +1,6 @@
 class PlayersRenderer {
   reRender(players: Player[], isDreamTeam: boolean = false) {
-    //check the any
+
     const container = $(".players-container");
     container.empty();
     const formattedPlayers = players.map((p) => {

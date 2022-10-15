@@ -1,7 +1,7 @@
 "use strict";
 class PlayersRenderer {
     reRender(players, isDreamTeam = false) {
-        //check the any
+
         const container = $(".players-container");
         container.empty();
         const formattedPlayers = players.map((p) => {
