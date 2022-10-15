@@ -1,6 +1,7 @@
 from fastapi import FastAPI,HTTPException
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
+from typing import Union
 
 from routes import dream_team,stats
 from services.nba_api import get_players 
@@ -15,13 +16,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.include_router(dream_team.router)
-app.include_router(stats.router)
+app.include_router(dream_team.router, prefix="/dreamteam")
+app.include_router(stats.router,prefix="/stats")
 
-@app.get('/')
-async def get_team(year: int, team: str):
+@app.get('/',status_code=200)
+async def get_team(year: int, team: str,filter: Union[str, None] = None):
     try:
         players = await get_players(year,team)
+        if filter:
+            players = [player for player in players if player[filter]] #fix errors in case of wrong filter
         return players
     except KeyError as e:
         raise HTTPException(status_code=400, detail= e.args[0])
