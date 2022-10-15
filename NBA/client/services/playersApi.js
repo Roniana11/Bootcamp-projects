@@ -14,15 +14,29 @@ function fetchPlayers(team, year) {
         return data;
     });
 }
-function getPlayerStats(playerID) {
+function getPlayerStats(lname, fname) {
     return __awaiter(this, void 0, void 0, function* () {
-        /// fix this method
-        try {
-            const data = yield $.get(`http://localhost:8000/images`);
-            return data;
-        }
-        catch (e) {
-            console.log(e);
-        }
+        const data = yield $.get(`http://localhost:8000/stats/?last_name=${lname}&first_name=${fname}`);
+        return data;
+    });
+}
+function getDreamTeam() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const data = yield $.get(`http://localhost:8000/dreamteam`);
+        return data;
+    });
+}
+function addToDreamTeam(playerData) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const data = yield $.post(`http://localhost:8000/dreamteam`, JSON.stringify(playerData));
+        return data;
+    });
+}
+function removeFromDreamTeam(playerID) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield $.ajax({
+            url: `http://localhost:8000/dreamteam/${playerID}`,
+            type: 'DELETE',
+        });
     });
 }

@@ -4,15 +4,26 @@ async function fetchPlayers(team: string, year: number) {
       { headers: { "Access-Control-Allow-Origin": "*" } }
     );
     return data;
-
 }
 
-async function getPlayerStats(playerID: string) {
-  /// fix this method
-  try {
-    const data = await $.get(`http://localhost:8000/images`);
+async function getPlayerStats(lname: string, fname:string) {
+    const data = await $.get(`http://localhost:8000/stats/?last_name=${lname}&first_name=${fname}`);
     return data;
-  } catch (e) {
-    console.log(e);
-  }
+}
+
+async function getDreamTeam() {
+    const data = await $.get(`http://localhost:8000/dreamteam`);
+    return data;
+}
+
+async function addToDreamTeam(playerData: Player | object) {
+    const data = await $.post(`http://localhost:8000/dreamteam`,JSON.stringify(playerData));
+    return data;
+}
+
+async function removeFromDreamTeam(playerID: string) {
+   await $.ajax({
+        url: `http://localhost:8000/dreamteam/${playerID}`,
+        type: 'DELETE',
+      });
 }
