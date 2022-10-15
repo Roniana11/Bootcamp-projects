@@ -21,27 +21,113 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   </head>
   <body>
-    <div class="serach-container">
-      <input type="text" id="teamInput" placeholder="Team name" />
-      <input
-        type="number"
-        id="yearInput"
-        placeholder="year"
-        min="2012"
-        max="2022"
-      />
-      <button id="getBtn">Get Players</button>
-    </div>
-    <div class="players-container"></div>
+    <header>
+      <button id="show-dreamteam-btn">DREAM TEAM</button>
+      <h1>Find all your favorite NBA players!</h1>
+      <div class="search-container">
+        <div class="input-container">
+          <input type="text" id="teamInput" placeholder="Team name" />
+          <label>Team name</label>
+        </div>
+        <div class="input-container">
+          <input
+            type="number"
+            id="yearInput"
+            placeholder="year"
+            min="2012"
+            max="2022"
+          />
+          <label>Year</label>
+        </div>
+        <button id="getBtn">Get Players</button>
+      </div>
+    </header>
+    <div id="players-container" class="players-container"></div>
+    <div id="demo-modal" class="modal"></div>
     <script id="players-template" type="text/x-handlebars-template">
       {{#each players}}
-        <div class="player-container" id="{{id}}">
+        <div class="player-container card" id="{{id}}">
           <h3>{{name}}</h3>
-          <div>{{jersey}}</div>
-          <img src="{{image}}" alt="{{name}}" />
-          <h5>{{position}}</h5>
+          <div class="player-info">
+            <p>{{jersey}}</p>
+            <p>{{position}}</p>
+            <button class="stats-btn">. . .</button>
+          </div>
+          <div class="img-container">
+            <img
+              src="{{image}}"
+              alt="{{name}}"
+              onerror="this.onerror=null; this.src='https://sportscollectorsdigest.com/.image/c_limit%2Ccs_srgb%2Cq_auto:good%2Cw_150/MTY4MDAzMjU5MzEzMDM4NjA5/image-placeholder-title.webp';"
+            />
+          </div>
+          <div class="dreamteam-btn-container">
+            {{#if isDreamTeam}}
+              <button class="dreamteam-btn remove">Remove</button>
+            {{else}}
+              <button class="dreamteam-btn add">Add to dream team</button>
+            {{/if}}
+          </div>
         </div>
       {{/each}}
+    </script>
+    <script id="stats-template" type="text/x-handlebars-template">
+      <div class="player-stats">
+        <div class="stats-entry">
+          <p>Games played</p>
+          <h5>{{games_played}}</h5>
+        </div>
+        <div class="stats-entry">
+          <p>MPG</p>
+          <h5>{{minutes_per_game}}</h5>
+        </div>
+        <div class="stats-entry">
+          <p>FGP</p>
+          <h5>{{field_goal_percentage}}%</h5>
+        </div>
+        <div class="stats-entry">
+          <p>FTP</p>
+          <h5>{{free_throw_percentage}}%</h5>
+        </div>
+        <div class="stats-entry">
+          <p>TPA</p>
+          <h5>{{three_point_attempted_per_game}}</h5>
+        </div>
+        <div class="stats-entry">
+          <p>TPM</p>
+          <h5>{{three_point_made_per_game}}</h5>
+        </div>
+        <div class="stats-entry">
+          <p>PPG</p>
+          <h5>{{points_per_game}}</h5>
+        </div>
+        <div class="stats-entry">
+          <p>APS</p>
+          <h5>{{assists_per_game}}</h5>
+        </div>
+        <div class="stats-entry">
+          <p>RPG</p>
+          <h5>{{rebounds_per_game}}</h5>
+        </div>
+        <div class="stats-entry">
+          <p>STG</p>
+          <h5>{{steals_per_game}}</h5>
+        </div>
+        <div class="stats-entry">
+          <p>BPG</p>
+          <h5>{{blocks_per_game}}</h5>
+        </div>
+        <div class="stats-entry">
+          <p>PER</p>
+          <h5>{{player_efficiency_rating}}</h5>
+        </div>
+      </div>
+    </script>
+    <script id="modal-template" type="text/x-handlebars-template">
+      <div class="modal__content">
+        <h1>{{title}}</h1>
+        <div>{{{content}}}</div>
+        <button class="close-btn">x</button>
+      </div>
     </script>
     <script src="./services/playersApi.js"></script>
     <script src="./models/Player.js"></script>
@@ -51,3 +137,5 @@
     <script src="./main.js"></script>
   </body>
 </html>
+
+<!-- https://i.pinimg.com/originals/8f/ef/e1/8fefe1b95d60ca1a56ad6095ec9b2d84.png -->
