@@ -16,8 +16,8 @@ class Players {
 
   getPlayerStats() {}
 
-  async loadPlayers(teamName: string, year: number) {
-    const data = await fetchPlayers(teamName, year);
+  async loadPlayers(teamName: string, year: number,filter:string) {
+    const data = await fetchPlayers(teamName, year,filter);
     this.cleanPlayers()
     this.players = data.map((player: any) => {
       //find a solution for any here

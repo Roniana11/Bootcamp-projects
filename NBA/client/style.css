@@ -55,7 +55,7 @@ header h1 {
   row-gap: 10px;
   column-gap: 10px;
   margin: 0 10%;
-  margin-bottom: 30px;
+  margin-bottom: 100px;
   min-width: 750px;
 }
 
@@ -115,12 +115,22 @@ header h1 {
   top: 5%;
 }
 
+#filter-btn{
+  background-color: transparent;
+  padding: 10px 10px;
+  color: white;
+  font-size: 15px;
+  position: absolute;
+  left: 5%;
+  top: 5%;
+}
+
 #getBtn{
     font-size: 18px;
     padding: 10px 10px;
 }
 
-#show-dreamteam-btn:hover {
+#show-dreamteam-btn:hover,#filter-btn:hover {
   background-color: #c9c9e8b6;
   color: black;
 }
@@ -177,6 +187,7 @@ header h1 {
   border: none;
   outline: none;
   border-bottom: 1px solid white;
+
 }
 
 .input-container input:focus ~ label,

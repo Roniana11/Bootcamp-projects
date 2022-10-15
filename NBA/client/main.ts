@@ -1,26 +1,27 @@
 const renderer = new PlayersRenderer();
 const players = new Players();
 
-async function renderPlayers() {
+async function renderPlayers(filter: string) {
   players.cleanPlayers();
-  //check if there is a better way
+
   const year = parseInt($("#yearInput").val()?.toString() || "") || 0;
   const team = $("#teamInput").val()?.toString() || "";
 
   try {
     await players.loadPlayers(
       team.trim().toLowerCase().split(" ").join("_"),
-      year
+      year,
+      filter
     );
     renderer.reRender(players.getPlayers());
   } catch (e: any) {
-    // create constants error messages
+
     if (e.status === 400) {
-      renderer.renderModal("error","There is no such Team");
+      renderer.renderModal("error", "There is no such Team");
     } else if (e.status === 404) {
-      renderer.renderModal("error","Year must be between 2012 to 2022");
+      renderer.renderModal("error", "Year must be between 2012 to 2022");
     } else {
-      renderer.renderModal("error","oooops! we had a problem");
+      renderer.renderModal("error", "oooops! we had a problem");
     }
   }
 }
@@ -31,7 +32,7 @@ async function renderDreamTeam() {
     const dreamteam = JSON.parse(data);
     renderer.reRender(dreamteam, true);
   } catch (e: any) {
-      renderer.renderModal("error","oooops! we had a problem");
+    renderer.renderModal("error", "oooops! we had a problem");
   }
 }
 
@@ -40,12 +41,15 @@ async function addToDreamTeamHandler(el: HTMLButtonElement) {
   const player_data = players.getPlayerData(id);
   try {
     await addToDreamTeam(player_data);
-    renderer.renderModal("Good!","We added this player to your dream team!");
+    renderer.renderModal("Good!", "We added this player to your dream team!");
   } catch (e: any) {
     if (e.status === 400) {
-      renderer.renderModal("Don't worry!","This player is already in your drem team");
+      renderer.renderModal(
+        "Don't worry!",
+        "This player is already in your drem team"
+      );
     } else {
-      renderer.renderModal("error","oooops! we had a problem");
+      renderer.renderModal("error", "oooops! we had a problem");
     }
   }
 }
@@ -54,10 +58,10 @@ async function removeFromDreamTeamHandler(el: HTMLButtonElement) {
   const id = $(el).closest(".player-container").attr("id") || "";
   try {
     await removeFromDreamTeam(id);
-    renderer.renderModal("Yay!","Deletion completed!");
+    renderer.renderModal("Yay!", "Deletion completed!");
     await renderDreamTeam();
   } catch (e: any) {
-    renderer.renderModal("error","oooops! we had a problem");    
+    renderer.renderModal("error", "oooops! we had a problem");
   }
 }
 
@@ -67,17 +71,20 @@ async function showStatsHandler(el: HTMLButtonElement) {
   const pName = player_data.name.split(" ");
   try {
     const playerStats = await getPlayerStats(pName[1], pName[0]); // add a ui something
-    renderer.renderStatsModal(player_data.name,playerStats.stats)
+    renderer.renderStatsModal(player_data.name, playerStats.stats);
   } catch (e: any) {
     if (e.status === 404) {
-      renderer.renderModal("Sorry!","We don't have more info about that player...");
+      renderer.renderModal(
+        "Sorry!",
+        "We don't have more info about that player..."
+      );
     } else {
-    renderer.renderModal("error","oooops! we had a problem");    
+      renderer.renderModal("error", "oooops! we had a problem");
     }
   }
 }
 
-$("#getBtn").on("click", renderPlayers);
+$("#getBtn").on("click", () => renderPlayers(''));
 
 $("#players-container").on("click", ".add", ({ target }) =>
   addToDreamTeamHandler(target)
@@ -93,6 +100,6 @@ $("#players-container").on("click", ".stats-btn", ({ target }) =>
 
 $("#show-dreamteam-btn").on("click", renderDreamTeam);
 
-$("#demo-modal").on("click", ".close-btn", () =>
-renderer.removeModal()
-);
+$("#filter-btn").on("click", () => renderPlayers("dateOfBirthUTC"));
+
+$("#demo-modal").on("click", ".close-btn", () => renderer.removeModal());

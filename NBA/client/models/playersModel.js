@@ -23,9 +23,9 @@ class Players {
         this.players.length = 0;
     }
     getPlayerStats() { }
-    loadPlayers(teamName, year) {
+    loadPlayers(teamName, year, filter) {
         return __awaiter(this, void 0, void 0, function* () {
-            const data = yield fetchPlayers(teamName, year);
+            const data = yield fetchPlayers(teamName, year, filter);
             this.cleanPlayers();
             this.players = data.map((player) => {
                 //find a solution for any here

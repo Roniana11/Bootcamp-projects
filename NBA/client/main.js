@@ -10,19 +10,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const renderer = new PlayersRenderer();
 const players = new Players();
-function renderPlayers() {
+function renderPlayers(filter) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         players.cleanPlayers();
-        //check if there is a better way
         const year = parseInt(((_a = $("#yearInput").val()) === null || _a === void 0 ? void 0 : _a.toString()) || "") || 0;
         const team = ((_b = $("#teamInput").val()) === null || _b === void 0 ? void 0 : _b.toString()) || "";
         try {
-            yield players.loadPlayers(team.trim().toLowerCase().split(" ").join("_"), year);
+            yield players.loadPlayers(team.trim().toLowerCase().split(" ").join("_"), year, filter);
             renderer.reRender(players.getPlayers());
         }
         catch (e) {
-            // create constants error messages
             if (e.status === 400) {
                 renderer.renderModal("error", "There is no such Team");
             }
@@ -97,9 +95,10 @@ function showStatsHandler(el) {
         }
     });
 }
-$("#getBtn").on("click", renderPlayers);
+$("#getBtn").on("click", () => renderPlayers(''));
 $("#players-container").on("click", ".add", ({ target }) => addToDreamTeamHandler(target));
 $("#players-container").on("click", ".remove", ({ target }) => removeFromDreamTeamHandler(target));
 $("#players-container").on("click", ".stats-btn", ({ target }) => showStatsHandler(target));
 $("#show-dreamteam-btn").on("click", renderDreamTeam);
+$("#filter-btn").on("click", () => renderPlayers("dateOfBirthUTC"));
 $("#demo-modal").on("click", ".close-btn", () => renderer.removeModal());

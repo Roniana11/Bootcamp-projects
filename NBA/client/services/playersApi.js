@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-function fetchPlayers(team, year) {
+function fetchPlayers(team, year, filter) {
     return __awaiter(this, void 0, void 0, function* () {
-        const data = yield $.get(`http://localhost:8000/?year=${year}&team=${team}`, { headers: { "Access-Control-Allow-Origin": "*" } });
+        let URL = `http://localhost:8000/?year=${year}&team=${team}`;
+        URL += filter ? `&filter=${filter}` : "";
+        const data = yield $.get(URL, {
+            headers: { "Access-Control-Allow-Origin": "*" },
+        });
         return data;
     });
 }
@@ -36,7 +40,7 @@ function removeFromDreamTeam(playerID) {
     return __awaiter(this, void 0, void 0, function* () {
         yield $.ajax({
             url: `http://localhost:8000/dreamteam/${playerID}`,
-            type: 'DELETE',
+            type: "DELETE",
         });
     });
 }
