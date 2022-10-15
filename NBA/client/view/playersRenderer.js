@@ -1,15 +1,35 @@
 "use strict";
 class PlayersRenderer {
-    reRender(players) {
-        const container = $('.players-container');
+    reRender(players, isDreamTeam = false) {
+        //check the any
+        const container = $(".players-container");
         container.empty();
-        let newPlayersEl = this.createTemplateEl('players-template', { players: [...players] });
+        const formattedPlayers = players.map((p) => {
+            return Object.assign(Object.assign({}, p), { isDreamTeam });
+        });
+        let newPlayersEl = this.createTemplateEl("players-template", {
+            players: formattedPlayers,
+        });
         container.append(newPlayersEl);
     }
-    renderErrorMessage(message) {
-        const container = $('.players-container');
+    renderModal(title, content) {
+        const container = $("#demo-modal");
+        container.css("display", "flex");
+        let newModalEl = this.createTemplateEl("modal-template", {
+            title,
+            content,
+        });
+        container.append(newModalEl);
+    }
+    renderStatsModal(name, playerStats) {
+        let newStatsEl = this.createTemplateEl("stats-template", playerStats);
+        this.renderModal(name, newStatsEl);
+    }
+    ;
+    removeModal() {
+        const container = $("#demo-modal");
+        container.css("display", "none");
         container.empty();
-        container.append(`<div class="card">${message}</div>`);
     }
     createTemplateEl(id, data) {
         let source = $(`#${id}`).html();
